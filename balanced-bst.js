@@ -48,6 +48,25 @@ class Tree {
             this.insert(value, root.right);
         }
     }
+
+    delete (value, root) {
+        root = root || this.root;
+        
+    }
+
+    find (value, root) {
+        root = root || this.root;
+
+        if(value === root.value){
+            return root;
+        }
+        else if(value < root.value){
+            return this.find(value, root.left);
+        }
+        else {
+            return this.find(value, root.right);
+        }
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
