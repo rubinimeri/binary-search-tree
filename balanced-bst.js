@@ -49,9 +49,43 @@ class Tree {
         }
     }
 
-    delete (value, root) {
-        root = root || this.root;
-        
+    delete(value, root = this.root) {
+        const checkChildren = root => {
+            if(root.left !== null && root.right !== null){
+                return 2;
+            }
+            else if(root.left !== null || root.right !== null){
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
+
+        if(value < root.value) {
+            if(root.left.value === value && checkChildren(root.left) === 0){
+                root.left = null;
+                return;
+            }
+            else if(root.left.value === value && checkChildren(root.left) === 1){
+                let replacementNode = root.left.left || root.left.right;
+                root.left = replacementNode;
+                return;
+            }
+            this.delete(value, root.left);
+        }
+        else if(value >= root.value) {
+            if(root.right.value === value && checkChildren(root.right) === 0){
+                root.right = null;
+                return;
+            }
+            else if(root.right.value === value && checkChildren(root.right) === 1){
+                let replacementNode = root.right.left || root.right.right;
+                root.right = replacementNode;
+                return;
+            }
+            this.delete(value, root.right);
+        }
     }
 
     find (value, root) {
@@ -82,7 +116,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-let arr = [4, 3, 2, 1, 5, 7, 6, 8, 9, 10]
+let arr = [4, 3, 2, 1, 5, 7, 6, 8, 9, 10, 11, 12, 13, 14, 15]
 const tree = new Tree();
 console.log(tree.buildTree(arr))
 prettyPrint(tree.root)
