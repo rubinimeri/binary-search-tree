@@ -30,6 +30,24 @@ class Tree {
         this.root = this.createBST(arr, 0, arr.length - 1);
         return this.root;
     }
+
+    insert (value, root) {
+        root = root || this.root;
+        if(value < root.value && root.left === null){
+            root.left = new Node(value);
+            return;
+        }
+        else if(value >= root.value && root.right === null){
+            root.right = new Node(value);
+            return;
+        }
+        else if(value < root.value){
+            this.insert(value, root.left);
+        }
+        else {
+            this.insert(value, root.right);
+        }
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
