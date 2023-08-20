@@ -84,6 +84,21 @@ class Tree {
         return root;
     }
 
+    levelOrder(root, arr = [], queue = []) {
+        queue.push(root);
+        while(queue.length > 0) {
+            arr.push(queue[0].value)
+            if(queue[0].left !== null){
+                queue.push(queue[0].left);
+            }
+            if(queue[0].right !== null){
+                queue.push(queue[0].right);
+            }
+            queue.shift();
+        }
+        return arr;
+    }
+
     _nextGreatest(node) {
         while(node.left !== null) {
             node = node.left;
