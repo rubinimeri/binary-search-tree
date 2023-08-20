@@ -84,21 +84,6 @@ class Tree {
         return root;
     }
 
-    levelOrder(root, arr = [], queue = []) {
-        queue.push(root);
-        while(queue.length > 0) {
-            arr.push(queue[0].value)
-            if(queue[0].left !== null){
-                queue.push(queue[0].left);
-            }
-            if(queue[0].right !== null){
-                queue.push(queue[0].right);
-            }
-            queue.shift();
-        }
-        return arr;
-    }
-
     _nextGreatest(node) {
         while(node.left !== null) {
             node = node.left;
@@ -118,6 +103,30 @@ class Tree {
         else {
             return this.find(value, root.right);
         }
+    }
+
+    levelOrder(root = this.root, arr = [], queue = []) {
+        queue.push(root);
+        while(queue.length > 0) {
+            arr.push(queue[0].value)
+            if(queue[0].left !== null){
+                queue.push(queue[0].left);
+            }
+            if(queue[0].right !== null){
+                queue.push(queue[0].right);
+            }
+            queue.shift();
+        }
+        return arr;
+    }
+
+    preorder(root = this.root, arr = []) {
+        if(root === null) return arr;
+        
+        arr.push(root.value);
+        this.inorder(root.left, arr);
+        this.inorder(root.right, arr);
+        return arr;
     }
 }
 
