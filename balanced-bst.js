@@ -128,6 +128,24 @@ class Tree {
         this.inorder(root.right, arr);
         return arr;
     }
+
+    inorder(root = this.root, arr = []) {
+        if(root === null) return arr;
+        
+        this.inorder(root.left, arr);
+        arr.push(root.value);
+        this.inorder(root.right, arr);
+        return arr;
+    }
+
+    postorder(root = this.root, arr = []) {
+        if(root === null) return arr;
+
+        this.postorder(root.left, arr);
+        this.postorder(root.right, arr);
+        arr.push(root.value)
+        return arr;
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
