@@ -50,42 +50,45 @@ class Tree {
     }
 
     delete(value, root = this.root) {
-        const checkChildren = root => {
-            if(root.left !== null && root.right !== null){
-                return 2;
-            }
-            else if(root.left !== null || root.right !== null){
-                return 1;
-            }
-            else {
-                return 0;
-            }
+        // If root doesn't have any nodes
+        if(root === null) {
+            return root;
         }
-
+        // If value is smaller that root.value, then value is
+        // in the left subtree
         if(value < root.value) {
-            if(root.left.value === value && checkChildren(root.left) === 0){
-                root.left = null;
-                return;
-            }
-            else if(root.left.value === value && checkChildren(root.left) === 1){
-                let replacementNode = root.left.left || root.left.right;
-                root.left = replacementNode;
-                return;
-            }
-            this.delete(value, root.left);
+            root.left = this.delete(value, root.left);
+        } 
+        // If value is bigger that root.value, then value is
+        // in the right subtree
+        else if (value > root.value) {
+            root.right = this.delete(value, root.right);
         }
-        else if(value >= root.value) {
-            if(root.right.value === value && checkChildren(root.right) === 0){
-                root.right = null;
-                return;
+        // else if the value is found then it's prepared for deletion
+        else {
+            // If there is no child or one
+            if(root.left === null) {
+                return root.right;
             }
-            else if(root.right.value === value && checkChildren(root.right) === 1){
-                let replacementNode = root.right.left || root.right.right;
-                root.right = replacementNode;
-                return;
+            else if(root.right === null) {
+                return root.left
             }
-            this.delete(value, root.right);
+
+            // Node with two children
+            const successor = this._nextGreatest(root.right);
+            root.value = successor;
+
+            // Delete the 'next greatest'
+            root.right = this.delete(successor, root.right);
         }
+        return root;
+    }
+
+    _nextGreatest(node) {
+        while(node.left !== null) {
+            node = node.left;
+        }
+        return node.value;
     }
 
     find (value, root) {
@@ -116,7 +119,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-let arr = [4, 3, 2, 1, 5, 7, 6, 8, 9, 10, 11, 12, 13, 14, 15]
+let arr = [4, 3, 2, 1, 5, 7, 6, 8]
 const tree = new Tree();
 console.log(tree.buildTree(arr))
 prettyPrint(tree.root)
