@@ -146,6 +146,14 @@ class Tree {
         arr.push(root.value)
         return arr;
     }
+
+    height(root = this.root) {
+        if(root === null) return -1;
+
+        const leftHeight = this.height(root.left);
+        const rightHeight = this.height(root.right);
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -161,7 +169,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-let arr = [4, 3, 2, 1, 5, 7, 6, 8]
+let arr = [4, 3, 2, 1, 5, 7, 6, 8, 9]
 const tree = new Tree();
 console.log(tree.buildTree(arr))
 prettyPrint(tree.root)
