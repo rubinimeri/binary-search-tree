@@ -192,7 +192,42 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-let arr = [4, 3, 2, 1, 5, 7, 6, 8, 9]
+const randomArr = (arr = []) => {
+    while (arr.length < 100) {
+        arr.push(Math.floor(Math.random() * 100))
+    }
+    return arr;
+}
+
+// Create BST
+let arr = randomArr();
 const tree = new Tree();
-console.log(tree.buildTree(arr))
-prettyPrint(tree.root)
+tree.buildTree(arr);
+prettyPrint(tree.root);
+
+// Confirm tree is balanced
+console.log(tree.isBalanced());
+
+// Print all elements in pre,post and inorder
+console.log(tree.preorder());
+console.log(tree.postorder());
+console.log(tree.inorder());
+
+// Unbalance tree by adding several numbers > 100
+tree.insert(102);
+tree.insert(218);
+tree.insert(150);
+
+// Confirm tree is unbalanced
+console.log(tree.isBalanced());
+
+// Rebalance the tree
+tree.rebalance();
+
+// Confirm tree is balanced
+console.log(tree.isBalanced());
+
+// Print all elements in pre,post and inorder
+console.log(tree.preorder());
+console.log(tree.postorder());
+console.log(tree.inorder());
