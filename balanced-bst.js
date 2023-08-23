@@ -154,6 +154,19 @@ class Tree {
         const rightHeight = this.height(root.right);
         return Math.max(leftHeight, rightHeight) + 1;
     }
+
+    depth(nodeValue, root, depth = 0) {
+        if(root === null) return -1;
+        root = root || this.root;
+        if (nodeValue === root.value) return depth;
+        else if (nodeValue < root.value) {
+            depth++;
+            return this.depth(nodeValue, root.left, depth);
+        } else if (nodeValue >= root.value) {
+            depth++;
+            return this.depth(nodeValue, root.right, depth);
+        }
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
