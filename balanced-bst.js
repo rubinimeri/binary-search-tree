@@ -167,6 +167,11 @@ class Tree {
             return this.depth(nodeValue, root.right, depth);
         }
     }
+
+    isBalanced(root = this.root) {
+        if(Math.abs(this.height(root.left) - this.height(root.right)) > 1) return false;
+        return true;
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
