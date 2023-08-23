@@ -172,6 +172,11 @@ class Tree {
         if(Math.abs(this.height(root.left) - this.height(root.right)) > 1) return false;
         return true;
     }
+
+    rebalance(root = this.root) {
+        const newTree = this.inorder();
+        this.buildTree(newTree);
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
